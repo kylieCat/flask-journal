@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <h1>flask-journal</h1>
+    <div class="post-form">
+        <form method="post" action="/">
+            {{ form.hidden_tag() }}
+            <fieldset>
+                {{ form.title.label }}
+                {{ form.title }}
+            </fieldset>
+            <fieldset>
+                {{ form.body.label }}
+                {{ form.body }}
+            </fieldset>
+            <fieldset>
+                {{ form.submit }}
+            </fieldset>
+        </form>
+        {% if form.errors %}
+            <div class="errors">
+                <p>{{ form.title.errors }}</p>
+                <p>{{ form.body.errors }}</p>
+            </div>
+        {% endif %}
+    </div>
+    {% if posts %}
+        {% for post in posts %}
+        <article>
+            <h2 class="title">{{ post.title }}</h2>
+            <p class ="text">{{ post.body }}</p>
+            <ul>
+                <li class="post-date">Posted: {{ post.post_date }}</li>
+                {% if post.moddified_date %}
+                    <li class="modified-date">Modified: {{ post.moddified_date }}</li>
+                {% endif %}
+            </ul>
+        </article>
+        {% endfor %}
+    {% else %}
+        <p>No posts yet. Start writing!</p>
+    {% endif %}
+{% endblock %}
